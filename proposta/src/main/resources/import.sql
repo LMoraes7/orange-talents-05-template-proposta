@@ -1,0 +1,1 @@
+insert into proposta(documento, email, logradouro, numero, nome, salario) values ('53213216631', 'diego@email.com', 'Rua Solar', 12, 'Diego Castro', 5000.00);
