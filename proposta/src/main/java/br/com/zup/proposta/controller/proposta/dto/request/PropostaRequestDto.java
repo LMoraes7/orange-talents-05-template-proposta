@@ -11,11 +11,13 @@ import javax.validation.constraints.Positive;
 import br.com.zup.proposta.dominio.modelo.proposta.Endereco;
 import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
 import br.com.zup.proposta.infraestrutura.validacao.anotacao.CPForCNPJ;
+import br.com.zup.proposta.infraestrutura.validacao.anotacao.ValorUnico;
 
 public class PropostaRequestDto {
 
 	@NotBlank
 	@CPForCNPJ
+	@ValorUnico(campo = "documento", classe = Proposta.class)
 	private String documento;
 
 	@NotBlank

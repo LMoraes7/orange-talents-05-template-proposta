@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.com.zup.proposta.dominio.exception.EntidadeNaoEncontradaException;
 import br.com.zup.proposta.dominio.exception.NegocioException;
+import br.com.zup.proposta.dominio.exception.ValorJaCadastradoException;
 import br.com.zup.proposta.handler.dto.response.ErroResponseDto;
 import br.com.zup.proposta.handler.dto.response.ErroValidacaoResponseDto;
 
@@ -48,5 +49,11 @@ public class ControllerHandler {
 	public ResponseEntity<ErroResponseDto> negocioException(NegocioException ex) {
 		ErroResponseDto erroResponseDto = new ErroResponseDto(ex.getMessage());
 		return ResponseEntity.badRequest().body(erroResponseDto);
+	}
+	
+	@ExceptionHandler(ValorJaCadastradoException.class)
+	public ResponseEntity<ErroResponseDto> valorJaCadastradoException(ValorJaCadastradoException ex) {
+		ErroResponseDto erroResponseDto = new ErroResponseDto(ex.getMessage());
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(erroResponseDto);
 	}
 }
