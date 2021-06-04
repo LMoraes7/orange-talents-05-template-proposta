@@ -1,4 +1,4 @@
-package br.com.zup.proposta.controller.proposta.dto.request;
+package br.com.zup.proposta.api.controller.proposta.dto.request;
 
 import java.math.BigDecimal;
 
@@ -18,7 +18,7 @@ public class PropostaRequestDto {
 	@NotBlank
 	@CPForCNPJ
 	@ValorUnico(campo = "documento", classe = Proposta.class)
-	private String documento;
+	private String documento; // CPF/CNPJ
 
 	@NotBlank
 	@Email

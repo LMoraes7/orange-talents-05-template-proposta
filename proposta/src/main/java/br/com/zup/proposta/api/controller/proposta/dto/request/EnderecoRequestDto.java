@@ -1,4 +1,4 @@
-package br.com.zup.proposta.controller.proposta.dto.request;
+package br.com.zup.proposta.api.controller.proposta.dto.request;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
