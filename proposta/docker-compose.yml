@@ -1,0 +1,26 @@
+version: '3'
+networks:
+  local:
+    driver: bridge
+services:
+  proposta-mysql:
+    image: mysql
+    networks:
+    - local
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+    - 3307:3306
+  propostas-api:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    environment:
+      DB_HOST: proposta-mysql
+    restart: always
+    ports:
+    - 8080:8080
+    networks:
+    - local
+    depends_on:
+    - proposta-mysql
