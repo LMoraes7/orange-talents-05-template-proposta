@@ -1,11 +1,22 @@
 package br.com.zup.proposta.api.controller.proposta.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public class ResultadoAnaliseResponseDto {
 
 	private String documento;
 	private String nome;
 	private ResultadoSolicitacao resultadoSolicitacao;
 	private String idProposta;
+
+	@JsonCreator
+	public ResultadoAnaliseResponseDto(String documento, String nome, ResultadoSolicitacao resultadoSolicitacao,
+			String idProposta) {
+		this.documento = documento;
+		this.nome = nome;
+		this.resultadoSolicitacao = resultadoSolicitacao;
+		this.idProposta = idProposta;
+	}
 
 	public String getDocumento() {
 		return documento;
