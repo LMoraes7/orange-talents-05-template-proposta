@@ -40,7 +40,7 @@ public class Proposta {
 
 	@Enumerated(EnumType.STRING)
 	private Status status;
-	
+
 	@OneToOne(mappedBy = "proposta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Cartao cartao;
 
@@ -72,7 +72,7 @@ public class Proposta {
 	public Status getStatus() {
 		return status;
 	}
-	
+
 	public Cartao getCartao() {
 		return cartao;
 	}
@@ -82,9 +82,9 @@ public class Proposta {
 			throw new IllegalArgumentException("A proposta referenciada já foi analisada pelo sistema.");
 		this.status = status;
 	}
-	
+
 	public void addCartao(Cartao cartao) {
-		if(this.cartao != null)
+		if (this.cartao != null)
 			throw new IllegalArgumentException("A proposta referenciada já está atrelada a um cartão.");
 		this.cartao = cartao;
 	}
@@ -96,6 +96,7 @@ public class Proposta {
 		result = prime * result + ((documento == null) ? 0 : documento.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
 
@@ -122,6 +123,11 @@ public class Proposta {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
 	}

@@ -1,7 +1,10 @@
 package br.com.zup.proposta.dominio.modelo.cartao;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,8 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 
+import br.com.zup.proposta.dominio.modelo.biometria.Biometria;
 import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
 
 @Entity
@@ -18,20 +24,23 @@ public class Cartao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(nullable = false, unique = true)
 	private String numeroDoCartao;
-	
+
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime emissao;
-	
+
 	@Column(nullable = false)
 	private String titular;
 
 	@JoinColumn(nullable = false, unique = true)
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
 	private Proposta proposta;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cartao")
+	private Set<Biometria> biometrias = new HashSet<Biometria>();
 
 	@Deprecated
 	public Cartao() {
@@ -42,7 +51,15 @@ public class Cartao {
 		this.emissao = emissao;
 		this.titular = titular;
 		this.proposta = proposta;
+	}
+
+	@PrePersist
+	public void addCartaoAProposta() {
 		this.proposta.addCartao(this);
+	}
+	
+	public void addBiometria(Biometria biometria) {
+		this.biometrias.add(biometria);
 	}
 
 	@Override
@@ -52,6 +69,7 @@ public class Cartao {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((numeroDoCartao == null) ? 0 : numeroDoCartao.hashCode());
 		result = prime * result + ((proposta == null) ? 0 : proposta.hashCode());
+		result = prime * result + ((titular == null) ? 0 : titular.hashCode());
 		return result;
 	}
 
@@ -78,6 +96,11 @@ public class Cartao {
 			if (other.proposta != null)
 				return false;
 		} else if (!proposta.equals(other.proposta))
+			return false;
+		if (titular == null) {
+			if (other.titular != null)
+				return false;
+		} else if (!titular.equals(other.titular))
 			return false;
 		return true;
 	}

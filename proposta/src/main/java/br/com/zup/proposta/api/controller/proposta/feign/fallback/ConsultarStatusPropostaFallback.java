@@ -1,9 +1,9 @@
 package br.com.zup.proposta.api.controller.proposta.feign.fallback;
 
+import br.com.zup.proposta.api.controller.proposta.dto.request.SolicitacaoAnaliseRequestDto;
 import br.com.zup.proposta.api.controller.proposta.dto.response.ResultadoAnaliseResponseDto;
 import br.com.zup.proposta.api.controller.proposta.dto.response.ResultadoSolicitacao;
 import br.com.zup.proposta.api.controller.proposta.feign.ConsultarStatusPropostaFeign;
-import br.com.zup.proposta.dominio.modelo.proposta.SolicitacaoAnaliseRequestDto;
 
 public class ConsultarStatusPropostaFallback implements ConsultarStatusPropostaFeign {
 

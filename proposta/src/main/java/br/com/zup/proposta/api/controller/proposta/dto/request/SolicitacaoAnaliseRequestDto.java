@@ -1,4 +1,6 @@
-package br.com.zup.proposta.dominio.modelo.proposta;
+package br.com.zup.proposta.api.controller.proposta.dto.request;
+
+import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
 
 public class SolicitacaoAnaliseRequestDto {
 

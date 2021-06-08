@@ -7,9 +7,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import br.com.zup.proposta.api.controller.proposta.dto.request.SolicitacaoAnaliseRequestDto;
+import br.com.zup.proposta.api.controller.proposta.dto.request.SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest;
 import br.com.zup.proposta.api.controller.proposta.feign.ConsultarStatusPropostaFeign;
-import br.com.zup.proposta.dominio.modelo.proposta.SolicitacaoAnaliseRequestDto;
-import br.com.zup.proposta.dominio.modelo.proposta.SolicitacaoDeAtualizacaoDeStatusDaProposta;
 
 @Component
 public class ConsultarStatusProposta {
@@ -31,7 +31,7 @@ public class ConsultarStatusProposta {
 		LOG.info("consultando sistema de análise de proposta ...");
 		Thread.sleep(5000);
 		LOG.info("resultado da análise retornado som sucesso");
-		var solicitacaoAtt = new SolicitacaoDeAtualizacaoDeStatusDaProposta(
+		var solicitacaoAtt = new SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest(
 				resultadoAnaliseResponseDto.getResultadoSolicitacao().getStatus(), propostaEvent.getId());
 		this.eventPublisher.publishEvent(solicitacaoAtt);
 		LOG.info("proposta liberada para atualização de status");

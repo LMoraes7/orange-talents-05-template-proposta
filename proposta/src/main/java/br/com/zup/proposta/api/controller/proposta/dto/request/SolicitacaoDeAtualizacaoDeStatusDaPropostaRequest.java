@@ -1,11 +1,13 @@
-package br.com.zup.proposta.dominio.modelo.proposta;
+package br.com.zup.proposta.api.controller.proposta.dto.request;
 
-public class SolicitacaoDeAtualizacaoDeStatusDaProposta {
+import br.com.zup.proposta.dominio.modelo.proposta.Status;
+
+public class SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest {
 
 	private Status status;
 	private Long id;
 
-	public SolicitacaoDeAtualizacaoDeStatusDaProposta(Status status, Long id) {
+	public SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest(Status status, Long id) {
 		this.status = status;
 		this.id = id;
 	}

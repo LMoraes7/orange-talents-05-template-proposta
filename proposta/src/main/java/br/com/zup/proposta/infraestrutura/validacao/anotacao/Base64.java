@@ -15,21 +15,17 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import br.com.zup.proposta.infraestrutura.validacao.validator.ValorUnicoValidator;
+import br.com.zup.proposta.infraestrutura.validacao.validator.Base64Validator;
 
-@Constraint(validatedBy = {ValorUnicoValidator.class})
+@Constraint(validatedBy = {Base64Validator.class})
 @Documented
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValorUnico {
+public @interface Base64 {
 
-	String message() default "Valor informado já está cadastrado no sistema. Por favor informe outro valor.";
+	String message() default "Valor informado não está em Base64. Por favor informe um valor válido.";
 
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };
-    
-    String campo();
-    
-    Class<?> classe();
 }

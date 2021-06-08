@@ -8,8 +8,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import br.com.zup.proposta.api.controller.proposta.dto.request.SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest;
 import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
-import br.com.zup.proposta.dominio.modelo.proposta.SolicitacaoDeAtualizacaoDeStatusDaProposta;
 import br.com.zup.proposta.dominio.repository.PropostaRepository;
 
 @Component
@@ -25,7 +25,7 @@ public class AtualizarStatusProposta {
 	@Async
 	@EventListener
 	@Transactional
-	public void atualizar(SolicitacaoDeAtualizacaoDeStatusDaProposta solicitacao) throws InterruptedException {
+	public void atualizar(SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest solicitacao) throws InterruptedException {
 		LOG.info("solicitação para atualização de proposta recebida com sucesso");
 		Proposta proposta = this.propostaRepository.findById(solicitacao.getId()).get();
 		proposta.atualizarStatus(solicitacao.getStatus());

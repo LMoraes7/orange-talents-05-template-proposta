@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.zup.proposta.api.controller.proposta.dto.request.PropostaRequestDto;
+import br.com.zup.proposta.api.controller.proposta.dto.request.SolicitacaoAnaliseRequestDto;
 import br.com.zup.proposta.api.controller.proposta.dto.response.PropostaResponseDto;
 import br.com.zup.proposta.dominio.exception.proposta.PropostaNaoEncontradaException;
 import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
-import br.com.zup.proposta.dominio.modelo.proposta.SolicitacaoAnaliseRequestDto;
 import br.com.zup.proposta.dominio.repository.PropostaRepository;
 
 @RestController
@@ -43,6 +44,7 @@ public class PropostaController {
 		return ResponseEntity.ok(new PropostaResponseDto(proposta));
 	}
 
+	@Transactional
 	@PostMapping
 	public ResponseEntity<Object> cadastrarProposta(@RequestBody @Valid PropostaRequestDto propostaRequest,
 			UriComponentsBuilder uriBuilder) {
