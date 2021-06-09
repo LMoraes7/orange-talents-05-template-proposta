@@ -1,4 +1,4 @@
-package br.com.zup.proposta.dominio.exception.biometria;
+package br.com.zup.proposta.dominio.exception.cartao.biometria;
 
 import br.com.zup.proposta.dominio.exception.EntidadeNaoEncontradaException;
 

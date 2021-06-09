@@ -2,8 +2,8 @@ package br.com.zup.proposta.api.controller.biometria.dto.request;
 
 import javax.validation.constraints.NotBlank;
 
-import br.com.zup.proposta.dominio.modelo.biometria.Biometria;
 import br.com.zup.proposta.dominio.modelo.cartao.Cartao;
+import br.com.zup.proposta.dominio.modelo.cartao.biometria.Biometria;
 import br.com.zup.proposta.infraestrutura.validacao.anotacao.Base64;
 import br.com.zup.proposta.infraestrutura.validacao.anotacao.ValorUnico;
 

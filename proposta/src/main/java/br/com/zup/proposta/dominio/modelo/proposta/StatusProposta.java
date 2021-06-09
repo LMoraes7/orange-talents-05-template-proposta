@@ -1,6 +1,6 @@
 package br.com.zup.proposta.dominio.modelo.proposta;
 
-public enum Status {
+public enum StatusProposta {
 
 	EM_ANALISE,
 	NAO_ELEGIVEL,

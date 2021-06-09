@@ -1,4 +1,4 @@
-package br.com.zup.proposta.dominio.modelo.biometria;
+package br.com.zup.proposta.dominio.modelo.cartao.biometria;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,8 +38,6 @@ public class Biometria {
 	
 	@PrePersist
 	public void addBiometriaNoCartao() {
-		System.out.println("---------------------------------------------------------------");
-		System.out.println("---------------------------------------------------------------");
 		this.cartao.addBiometria(this);
 	}
 	

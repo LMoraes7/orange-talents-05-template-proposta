@@ -16,7 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 
-import br.com.zup.proposta.dominio.modelo.biometria.Biometria;
+import br.com.zup.proposta.dominio.modelo.cartao.biometria.Biometria;
+import br.com.zup.proposta.dominio.modelo.cartao.bloqueio.Bloqueio;
 import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
 
 @Entity
@@ -38,9 +39,15 @@ public class Cartao {
 	@JoinColumn(nullable = false, unique = true)
 	@OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
 	private Proposta proposta;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cartao")
 	private Set<Biometria> biometrias = new HashSet<Biometria>();
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cartao")
+	private Set<Bloqueio> bloqueios = new HashSet<Bloqueio>();
+
+	@Column(nullable = false)
+	private boolean ativo;
 
 	@Deprecated
 	public Cartao() {
@@ -51,6 +58,11 @@ public class Cartao {
 		this.emissao = emissao;
 		this.titular = titular;
 		this.proposta = proposta;
+		this.ativo = true;
+	}
+	
+	public String getNumeroDoCartao() {
+		return numeroDoCartao;
 	}
 
 	@PrePersist
@@ -60,6 +72,19 @@ public class Cartao {
 	
 	public void addBiometria(Biometria biometria) {
 		this.biometrias.add(biometria);
+	}
+
+	public void bloquear(Bloqueio bloqueio) {
+		this.bloqueios.add(bloqueio);
+		this.ativo = false;
+	}
+
+	public void desbloquear() {
+		this.ativo = true;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
 	}
 
 	@Override
@@ -108,6 +133,6 @@ public class Cartao {
 	@Override
 	public String toString() {
 		return "Cartao [id=" + id + ", numeroDoCartao=" + numeroDoCartao + ", emissao=" + emissao + ", titular="
-				+ titular + ", proposta=" + proposta + "]";
+				+ titular + ", ativo=" + ativo + "]";
 	}
 }

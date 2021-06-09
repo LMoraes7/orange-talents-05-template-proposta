@@ -1,21 +1,21 @@
 package br.com.zup.proposta.api.controller.proposta.dto.response;
 
-import br.com.zup.proposta.dominio.modelo.proposta.Status;
+import br.com.zup.proposta.dominio.modelo.proposta.StatusProposta;
 
 public enum ResultadoSolicitacao {
 
 	COM_RESTRICAO {
 		@Override
-		public Status getStatus() {
-			return Status.NAO_ELEGIVEL;
+		public StatusProposta getStatus() {
+			return StatusProposta.NAO_ELEGIVEL;
 		}
 	},
 	SEM_RESTRICAO {
 		@Override
-		public Status getStatus() {
-			return Status.ELEGIVEL;
+		public StatusProposta getStatus() {
+			return StatusProposta.ELEGIVEL;
 		}
 	};
 	
-	public abstract Status getStatus();
+	public abstract StatusProposta getStatus();
 }

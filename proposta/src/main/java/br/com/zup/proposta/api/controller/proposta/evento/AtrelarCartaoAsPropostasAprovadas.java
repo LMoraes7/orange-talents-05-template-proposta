@@ -15,7 +15,7 @@ import br.com.zup.proposta.api.controller.proposta.dto.response.ResultadoCartaoR
 import br.com.zup.proposta.api.controller.proposta.feign.AtrelarCartaoAsPropostasAprovadasFeign;
 import br.com.zup.proposta.dominio.modelo.cartao.Cartao;
 import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
-import br.com.zup.proposta.dominio.modelo.proposta.Status;
+import br.com.zup.proposta.dominio.modelo.proposta.StatusProposta;
 
 @Component
 public class AtrelarCartaoAsPropostasAprovadas {
@@ -36,7 +36,7 @@ public class AtrelarCartaoAsPropostasAprovadas {
 		LOG.info("buscando propostas elegíveis que não possuem cartão cadastrado");
 		String jpql = "SELECT p FROM Proposta p LEFT JOIN FETCH p.cartao c WHERE (p.status = :status AND c.id is null)";
 		List<Proposta> propostas = this.manager.createQuery(jpql, Proposta.class)
-				.setParameter("status", Status.ELEGIVEL).getResultList();
+				.setParameter("status", StatusProposta.ELEGIVEL).getResultList();
 		LOG.info("foram buscadas {} propostas aprovadas e que não possuem cartão cadastrado", propostas.size());
 		for (Proposta proposta : propostas)
 			this.realizarRequisicaoAoSistemaExternoDeCartoes(proposta);

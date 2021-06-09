@@ -1,22 +1,22 @@
 package br.com.zup.proposta.api.controller.proposta.dto.request;
 
-import br.com.zup.proposta.dominio.modelo.proposta.Status;
+import br.com.zup.proposta.dominio.modelo.proposta.StatusProposta;
 
 public class SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest {
 
-	private Status status;
+	private StatusProposta status;
 	private Long id;
 
-	public SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest(Status status, Long id) {
+	public SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest(StatusProposta status, Long id) {
 		this.status = status;
 		this.id = id;
 	}
 
-	public Status getStatus() {
+	public StatusProposta getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(StatusProposta status) {
 		this.status = status;
 	}
 

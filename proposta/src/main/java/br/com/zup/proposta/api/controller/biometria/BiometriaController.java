@@ -16,10 +16,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.zup.proposta.api.controller.biometria.dto.request.BiometriaRequestDto;
 import br.com.zup.proposta.api.controller.biometria.dto.response.BiometriaResponseDto;
-import br.com.zup.proposta.dominio.exception.biometria.BiometriaNaoEncontradaException;
 import br.com.zup.proposta.dominio.exception.cartao.CartaoNaoEncontradoException;
-import br.com.zup.proposta.dominio.modelo.biometria.Biometria;
+import br.com.zup.proposta.dominio.exception.cartao.biometria.BiometriaNaoEncontradaException;
 import br.com.zup.proposta.dominio.modelo.cartao.Cartao;
+import br.com.zup.proposta.dominio.modelo.cartao.biometria.Biometria;
 import br.com.zup.proposta.dominio.repository.BiometriaRepository;
 import br.com.zup.proposta.dominio.repository.CartaoRepository;
 

@@ -2,7 +2,8 @@ package br.com.zup.proposta.handler;
 
 public enum ProblemType {
 	
-	NEGOCIO("Requisição inválida"),
+	OPERACAO_INVALIDA("Manipulação de recurso é inválida"),
+	NEGOCIO("Requisição é inválida"),
 	ENTIDADE_NAO_ENCONTRADA("Recurso não encontrado");
 	
 	private String title;

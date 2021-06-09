@@ -39,7 +39,7 @@ public class Proposta {
 	private Endereco endereco;
 
 	@Enumerated(EnumType.STRING)
-	private Status status;
+	private StatusProposta status;
 
 	@OneToOne(mappedBy = "proposta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Cartao cartao;
@@ -54,7 +54,7 @@ public class Proposta {
 		this.endereco = endereco;
 		this.nome = nome;
 		this.salario = salario;
-		this.status = Status.EM_ANALISE;
+		this.status = StatusProposta.EM_ANALISE;
 	}
 
 	public Long getId() {
@@ -69,7 +69,7 @@ public class Proposta {
 		return nome;
 	}
 
-	public Status getStatus() {
+	public StatusProposta getStatus() {
 		return status;
 	}
 
@@ -77,8 +77,8 @@ public class Proposta {
 		return cartao;
 	}
 
-	public void atualizarStatus(Status status) {
-		if (!this.status.equals(Status.EM_ANALISE))
+	public void atualizarStatus(StatusProposta status) {
+		if (!this.status.equals(StatusProposta.EM_ANALISE))
 			throw new IllegalArgumentException("A proposta referenciada já foi analisada pelo sistema.");
 		this.status = status;
 	}

@@ -1,6 +1,6 @@
 package br.com.zup.proposta.api.controller.biometria.dto.response;
 
-import br.com.zup.proposta.dominio.modelo.biometria.Biometria;
+import br.com.zup.proposta.dominio.modelo.cartao.biometria.Biometria;
 
 public class BiometriaResponseDto {
 

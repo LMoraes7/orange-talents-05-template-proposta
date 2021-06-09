@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.zup.proposta.dominio.exception.EntidadeNaoEncontradaException;
+import br.com.zup.proposta.dominio.exception.OperacaoInvalidaException;
 import br.com.zup.proposta.handler.dto.response.ErroResponseDto;
 import br.com.zup.proposta.infraestrutura.validacao.anotacao.ValorUnico;
 
@@ -40,16 +41,15 @@ public class ControllerHandler extends ResponseEntityExceptionHandler {
 		List<FieldError> filterCollection = this.filtrarCollection(fieldErrors,
 				erro -> !erro.getCode().equals(ValorUnico.class.getSimpleName()));
 
-		String title = ProblemType.NEGOCIO.getTitle();
-
-		this.preencherListaErrosDto(errosDto, filterCollection, HttpStatus.BAD_REQUEST, title);
+		this.preencherListaErrosDto(errosDto, filterCollection, HttpStatus.BAD_REQUEST, ProblemType.NEGOCIO);
 
 		filterCollection = this.filtrarCollection(fieldErrors,
 				erro -> erro.getCode().equals(ValorUnico.class.getSimpleName()));
 
 		if (!filterCollection.isEmpty()) {
 			status = HttpStatus.UNPROCESSABLE_ENTITY;
-			this.preencherListaErrosDto(errosDto, filterCollection, HttpStatus.UNPROCESSABLE_ENTITY, title);
+			this.preencherListaErrosDto(errosDto, filterCollection, HttpStatus.UNPROCESSABLE_ENTITY,
+					ProblemType.NEGOCIO);
 		}
 
 		return this.handleExceptionInternal(ex, errosDto, headers, status, request);
@@ -60,8 +60,15 @@ public class ControllerHandler extends ResponseEntityExceptionHandler {
 			WebRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		ErroResponseDto erroResponseDto = this
-				.erroResponseDtoBuilder(status, ProblemType.ENTIDADE_NAO_ENCONTRADA.getTitle(), null, ex.getMessage())
-				.build();
+				.erroResponseDtoBuilder(status, ProblemType.ENTIDADE_NAO_ENCONTRADA, null, ex.getMessage()).build();
+		return this.handleExceptionInternal(ex, erroResponseDto, new HttpHeaders(), status, request);
+	}
+
+	@ExceptionHandler(OperacaoInvalidaException.class)
+	public ResponseEntity<Object> operacaoInvalidaExceptionHandler(OperacaoInvalidaException ex, WebRequest request) {
+		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+		ErroResponseDto erroResponseDto = this
+				.erroResponseDtoBuilder(status, ProblemType.OPERACAO_INVALIDA, null, ex.getMessage()).build();
 		return this.handleExceptionInternal(ex, erroResponseDto, new HttpHeaders(), status, request);
 	}
 
@@ -73,16 +80,16 @@ public class ControllerHandler extends ResponseEntityExceptionHandler {
 		return super.handleExceptionInternal(ex, body, headers, status, request);
 	}
 
-	private ErroResponseDto.Builder erroResponseDtoBuilder(HttpStatus status, String title, String field,
+	private ErroResponseDto.Builder erroResponseDtoBuilder(HttpStatus status, ProblemType problem, String field,
 			String detail) {
-		return new ErroResponseDto.Builder(status.value(), title).field(field).detail(detail);
+		return new ErroResponseDto.Builder(status.value(), problem.getTitle()).field(field).detail(detail);
 	}
 
 	private void preencherListaErrosDto(List<ErroResponseDto> errosDto, List<FieldError> filterCollection,
-			HttpStatus status, String title) {
+			HttpStatus status, ProblemType problem) {
 		filterCollection.forEach(erro -> {
 			String detail = this.messageSource.getMessage(erro, LocaleContextHolder.getLocale());
-			errosDto.add(this.erroResponseDtoBuilder(status, title, erro.getField(), detail).build());
+			errosDto.add(this.erroResponseDtoBuilder(status, problem, erro.getField(), detail).build());
 		});
 	}
 
