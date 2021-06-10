@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,6 +39,10 @@ public class Bloqueio {
 	@JoinColumn(nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
 	private Cartao cartao;
+	
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private StatusBloqueio status;
 
 	@Deprecated
 	public Bloqueio() {
@@ -46,11 +52,19 @@ public class Bloqueio {
 		this.enderecoIp = enderecoIp;
 		this.userAgent = userAgent;
 		this.cartao = cartao;
+		this.status = StatusBloqueio.EM_ANALISE;
 	}
 
 	@PrePersist
 	public void bloquearCartao() {
-		this.cartao.bloquear(this);
+		this.cartao.cadastrarTentativaDeBloqueio(this);
+	}
+	
+	public void atualizarStatus(StatusBloqueio status) {
+		if(!this.status.equals(StatusBloqueio.EM_ANALISE))
+			throw new IllegalArgumentException("Status desse bloqueio não pode ser alterado.");
+		this.status = status;
+		this.cartao.atualizarStatus(status.getStatusCartao());
 	}
 
 	@Override

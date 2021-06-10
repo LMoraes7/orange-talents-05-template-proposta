@@ -26,6 +26,7 @@ public class AtualizarStatusPropostaEvent {
 	@EventListener
 	@Transactional
 	public void atualizar(SolicitacaoDeAtualizacaoDeStatusDaPropostaRequest solicitacao) throws InterruptedException {
+		Thread.sleep(2000);
 		LOG.info("solicitação para atualização de proposta recebida com sucesso");
 		Proposta proposta = this.propostaRepository.findById(solicitacao.getId()).get();
 		proposta.atualizarStatus(solicitacao.getStatus());

@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,9 +47,10 @@ public class Cartao {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cartao")
 	private Set<Bloqueio> bloqueios = new HashSet<Bloqueio>();
-
+	
 	@Column(nullable = false)
-	private boolean ativo;
+	@Enumerated(EnumType.STRING)
+	private StatusCartao status;
 
 	@Deprecated
 	public Cartao() {
@@ -58,7 +61,7 @@ public class Cartao {
 		this.emissao = emissao;
 		this.titular = titular;
 		this.proposta = proposta;
-		this.ativo = true;
+		this.status = StatusCartao.ATIVO;
 	}
 	
 	public Long getId() {
@@ -78,17 +81,18 @@ public class Cartao {
 		this.biometrias.add(biometria);
 	}
 
-	public void bloquear(Bloqueio bloqueio) {
-		this.bloqueios.add(bloqueio);
-		this.ativo = false;
-	}
-
-	public void desbloquear() {
-		this.ativo = true;
-	}
-
 	public boolean isAtivo() {
-		return ativo;
+		return this.status.equals(StatusCartao.ATIVO);
+	}
+	
+	public void cadastrarTentativaDeBloqueio(Bloqueio bloqueio) {
+		if(!this.isAtivo())
+			throw new IllegalArgumentException("Cartão já está bloqueado.");
+		this.bloqueios.add(bloqueio);
+	}
+	
+	public void atualizarStatus(StatusCartao status) {
+		this.status = status;
 	}
 
 	@Override
@@ -132,11 +136,5 @@ public class Cartao {
 		} else if (!titular.equals(other.titular))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Cartao [id=" + id + ", numeroDoCartao=" + numeroDoCartao + ", emissao=" + emissao + ", titular="
-				+ titular + ", ativo=" + ativo + "]";
 	}
 }

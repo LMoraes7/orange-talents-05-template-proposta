@@ -1,7 +1,7 @@
 insert into proposta(documento, email, logradouro, numero, nome, salario, status) values ('53213216631', 'diego@email.com', 'Rua Solar', 12, 'Diego Castro', 5000.00, 'ELEGIVEL');
-insert into proposta(documento, email, logradouro, numero, nome, salario, status) values ('27322562500', 'maria@email.com', 'Rua Solar', 12, 'Maria Fernanda', 5000.00, 'ELEGIVEL');
+insert into proposta(documento, email, logradouro, numero, nome, salario, status) values ('27322562500', 'maria@email.com', 'Rua Solar', 12, 'Maria Fernanda', 5000.00, 'NAO_ELEGIVEL');
 insert into proposta(documento, email, logradouro, numero, nome, salario, status) values ('29203877401', 'thiago@email.com', 'Rua Solar', 12, 'Thiago Henrique', 5000.00, 'ELEGIVEL');
-insert into proposta(documento, email, logradouro, numero, nome, salario, status) values ('75883983707', 'carlos@email.com', 'Rua Solar', 12, 'Carlos Figueiredo', 5000.00, 'ELEGIVEL');
+insert into proposta(documento, email, logradouro, numero, nome, salario, status) values ('75883983707', 'carlos@email.com', 'Rua Solar', 12, 'Carlos Figueiredo', 5000.00, 'NAO_ELEGIVEL');
 insert into proposta(documento, email, logradouro, numero, nome, salario, status) values ('73100632877', 'ana@email.com', 'Rua Solar', 12, 'Ana Mariana', 5000.00, 'ELEGIVEL');
 insert into proposta(documento, email, logradouro, numero, nome, salario, status) values ('09764518753', 'pedro@email.com', 'Rua Solar', 12, 'Pedro Guimarães', 5000.00, 'ELEGIVEL');
 insert into proposta(documento, email, logradouro, numero, nome, salario, status) values ('82863580663', 'jose@email.com', 'Rua Solar', 12, 'José Eduardo', 5000.00, 'ELEGIVEL');

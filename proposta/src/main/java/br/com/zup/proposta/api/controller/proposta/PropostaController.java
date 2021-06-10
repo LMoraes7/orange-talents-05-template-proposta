@@ -39,8 +39,10 @@ public class PropostaController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<PropostaResponseDto> consultarProposta(@PathVariable("id") Long id) {
+		LOG.info("recebendo requisição para busca de proposta {}", id);
 		Proposta proposta = this.propostaRepository.findById(id)
 				.orElseThrow(() -> new PropostaNaoEncontradaException(id));
+		LOG.info("retornando resultado da busca de proposta {}", id);
 		return ResponseEntity.ok(new PropostaResponseDto(proposta));
 	}
 

@@ -47,6 +47,7 @@ public class AtrelarCartaoAsPropostasAprovadasEvent {
 		LOG.info("realizando requisição para sistema de gerador de cartões para a proposta do titular {}",
 				proposta.getNome());
 		var resultadoCartaoResponse = this.clientFeign.atrelarCartao(new SolicitacaoAnaliseRequestDto(proposta));
+		Thread.sleep(2000);
 		this.atrelarCartaoAProposta(proposta, resultadoCartaoResponse);
 	}
 
