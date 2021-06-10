@@ -13,12 +13,12 @@ import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
 import br.com.zup.proposta.dominio.repository.PropostaRepository;
 
 @Component
-public class AtualizarStatusProposta {
+public class AtualizarStatusPropostaEvent {
 
 	private PropostaRepository propostaRepository;
-	private final Logger LOG = LoggerFactory.getLogger(ConsultarStatusProposta.class);
+	private final Logger LOG = LoggerFactory.getLogger(ConsultarStatusPropostaEvent.class);
 
-	public AtualizarStatusProposta(PropostaRepository propostaRepository) {
+	public AtualizarStatusPropostaEvent(PropostaRepository propostaRepository) {
 		this.propostaRepository = propostaRepository;
 	}
 

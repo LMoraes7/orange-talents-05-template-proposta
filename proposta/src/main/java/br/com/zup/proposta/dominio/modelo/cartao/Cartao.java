@@ -61,6 +61,10 @@ public class Cartao {
 		this.ativo = true;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	
 	public String getNumeroDoCartao() {
 		return numeroDoCartao;
 	}

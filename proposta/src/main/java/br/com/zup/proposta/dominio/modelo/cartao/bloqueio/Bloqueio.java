@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,19 +38,14 @@ public class Bloqueio {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
 	private Cartao cartao;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private StatusBloqueio status;
-
 	@Deprecated
 	public Bloqueio() {
 	}
 
-	public Bloqueio(String enderecoIp, String userAgent, Cartao cartao, StatusBloqueio status) {
+	public Bloqueio(String enderecoIp, String userAgent, Cartao cartao) {
 		this.enderecoIp = enderecoIp;
 		this.userAgent = userAgent;
 		this.cartao = cartao;
-		this.status = status;
 	}
 
 	@PrePersist
@@ -112,8 +105,7 @@ public class Bloqueio {
 	@Override
 	public String toString() {
 		return "Bloqueio [id=" + id + ", enderecoIp=" + enderecoIp + ", userAgent=" + userAgent + ", instanteBloqueio="
-				+ instanteBloqueio + ", cartao=" + cartao + ", status=" + status + "]";
+				+ instanteBloqueio + ", cartao=" + cartao + "]";
 	}
 
-	
 }

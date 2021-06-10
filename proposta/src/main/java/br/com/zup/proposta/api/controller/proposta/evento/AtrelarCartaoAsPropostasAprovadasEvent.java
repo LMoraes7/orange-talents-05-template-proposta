@@ -18,13 +18,13 @@ import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
 import br.com.zup.proposta.dominio.modelo.proposta.StatusProposta;
 
 @Component
-public class AtrelarCartaoAsPropostasAprovadas {
+public class AtrelarCartaoAsPropostasAprovadasEvent {
 
 	private EntityManager manager;
 	private AtrelarCartaoAsPropostasAprovadasFeign clientFeign;
-	private final Logger LOG = LoggerFactory.getLogger(AtrelarCartaoAsPropostasAprovadas.class);
+	private final Logger LOG = LoggerFactory.getLogger(AtrelarCartaoAsPropostasAprovadasEvent.class);
 
-	public AtrelarCartaoAsPropostasAprovadas(EntityManager manager,
+	public AtrelarCartaoAsPropostasAprovadasEvent(EntityManager manager,
 			AtrelarCartaoAsPropostasAprovadasFeign clientFeign) {
 		this.manager = manager;
 		this.clientFeign = clientFeign;

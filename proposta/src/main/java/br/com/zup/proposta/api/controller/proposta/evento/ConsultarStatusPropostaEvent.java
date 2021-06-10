@@ -12,13 +12,13 @@ import br.com.zup.proposta.api.controller.proposta.dto.request.SolicitacaoDeAtua
 import br.com.zup.proposta.api.controller.proposta.feign.ConsultarStatusPropostaFeign;
 
 @Component
-public class ConsultarStatusProposta {
+public class ConsultarStatusPropostaEvent {
 
 	private ConsultarStatusPropostaFeign feign;
 	private ApplicationEventPublisher eventPublisher;
-	private final Logger LOG = LoggerFactory.getLogger(ConsultarStatusProposta.class);
+	private final Logger LOG = LoggerFactory.getLogger(ConsultarStatusPropostaEvent.class);
 
-	public ConsultarStatusProposta(ConsultarStatusPropostaFeign feign, ApplicationEventPublisher eventPublisher) {
+	public ConsultarStatusPropostaEvent(ConsultarStatusPropostaFeign feign, ApplicationEventPublisher eventPublisher) {
 		this.feign = feign;
 		this.eventPublisher = eventPublisher;
 	}
