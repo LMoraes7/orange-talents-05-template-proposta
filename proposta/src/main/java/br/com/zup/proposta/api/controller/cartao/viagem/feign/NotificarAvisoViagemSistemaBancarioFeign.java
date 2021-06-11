@@ -12,7 +12,7 @@ import br.com.zup.proposta.api.controller.cartao.viagem.dto.response.ResultadoAv
 @FeignClient(name = "postAvisos", url = "http://localhost:8888")
 public interface NotificarAvisoViagemSistemaBancarioFeign {
 
-	@RequestMapping(value="/api/cartoes/{id}/avisos", method= RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/api/cartoes/{id}/avisos", method = RequestMethod.POST, consumes = "application/json")
 	ResultadoAvisoViagemResponseDto notificar(@PathVariable("id") String id,
 			@RequestBody NotificarAvisoViagemRequestDto avisoViagemRequest);
 }

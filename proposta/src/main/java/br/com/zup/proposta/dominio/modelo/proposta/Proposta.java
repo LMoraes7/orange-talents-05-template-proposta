@@ -68,6 +68,10 @@ public class Proposta {
 	public String getNome() {
 		return nome;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
 
 	public StatusProposta getStatus() {
 		return status;

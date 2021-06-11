@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 
 import br.com.zup.proposta.dominio.modelo.cartao.Cartao;
 
@@ -52,6 +53,11 @@ public class AvisoViagem {
 		this.userAgent = userAgent;
 		this.cartao = cartao;
 		this.instanteDoAviso = LocalDateTime.now();
+	}
+	
+	@PrePersist
+	public void addAvisoViagemAoCartao() {
+		this.cartao.addAvisoViagem(this);
 	}
 	
 	public String getDestino() {
