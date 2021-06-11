@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import br.com.zup.proposta.dominio.modelo.cartao.Cartao;
 
 @Entity
@@ -31,7 +29,6 @@ public class AvisoViagem {
 	private LocalDate termino;
 
 	@Column(nullable = false, columnDefinition = "datetime")
-	@CreationTimestamp
 	private LocalDateTime instanteDoAviso;
 
 	@Column(nullable = false)
@@ -54,6 +51,15 @@ public class AvisoViagem {
 		this.ipCliente = ipCliente;
 		this.userAgent = userAgent;
 		this.cartao = cartao;
+		this.instanteDoAviso = LocalDateTime.now();
+	}
+	
+	public String getDestino() {
+		return destino;
+	}
+	
+	public LocalDate getTermino() {
+		return termino;
 	}
 
 	@Override
