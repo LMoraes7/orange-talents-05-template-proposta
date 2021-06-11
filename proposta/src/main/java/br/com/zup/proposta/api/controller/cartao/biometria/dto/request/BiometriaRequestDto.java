@@ -1,4 +1,4 @@
-package br.com.zup.proposta.api.controller.biometria.dto.request;
+package br.com.zup.proposta.api.controller.cartao.biometria.dto.request;
 
 import javax.validation.constraints.NotBlank;
 

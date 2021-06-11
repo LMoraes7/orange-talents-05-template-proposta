@@ -1,4 +1,4 @@
-package br.com.zup.proposta.api.controller.biometria;
+package br.com.zup.proposta.api.controller.cartao.biometria;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.zup.proposta.api.controller.biometria.dto.request.BiometriaRequestDto;
-import br.com.zup.proposta.api.controller.biometria.dto.response.BiometriaResponseDto;
+import br.com.zup.proposta.api.controller.cartao.biometria.dto.request.BiometriaRequestDto;
+import br.com.zup.proposta.api.controller.cartao.biometria.dto.response.BiometriaResponseDto;
 import br.com.zup.proposta.dominio.exception.cartao.CartaoNaoEncontradoException;
 import br.com.zup.proposta.dominio.exception.cartao.biometria.BiometriaNaoEncontradaException;
 import br.com.zup.proposta.dominio.modelo.cartao.Cartao;

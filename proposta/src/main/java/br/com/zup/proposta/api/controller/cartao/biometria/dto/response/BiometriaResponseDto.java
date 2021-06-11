@@ -1,4 +1,4 @@
-package br.com.zup.proposta.api.controller.biometria.dto.response;
+package br.com.zup.proposta.api.controller.cartao.biometria.dto.response;
 
 import br.com.zup.proposta.dominio.modelo.cartao.biometria.Biometria;
 
