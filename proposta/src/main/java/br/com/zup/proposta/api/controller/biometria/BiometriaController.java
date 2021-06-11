@@ -1,7 +1,10 @@
 package br.com.zup.proposta.api.controller.biometria;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -24,18 +27,31 @@ import br.com.zup.proposta.dominio.modelo.cartao.Cartao;
 import br.com.zup.proposta.dominio.modelo.cartao.biometria.Biometria;
 import br.com.zup.proposta.dominio.repository.BiometriaRepository;
 import br.com.zup.proposta.dominio.repository.CartaoRepository;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tag;
 
 @RestController
-@RequestMapping("/biometrias")
+@RequestMapping("/api/biometrias")
 public class BiometriaController {
 
 	private CartaoRepository cartaoRepository;
 	private BiometriaRepository biometriaRepository;
+	private final MeterRegistry meterRegister;
 	private final Logger LOG = LoggerFactory.getLogger(BiometriaController.class);
+	private Counter counterBiometriasCadastradas;
 
-	public BiometriaController(CartaoRepository cartaoRepository, BiometriaRepository biometriaRepository) {
+	public BiometriaController(CartaoRepository cartaoRepository, BiometriaRepository biometriaRepository,
+			MeterRegistry meterRegister) {
 		this.cartaoRepository = cartaoRepository;
 		this.biometriaRepository = biometriaRepository;
+		this.meterRegister = meterRegister;
+	}
+	
+	@PostConstruct
+	public void initMetricas() {
+		List<Tag> tags = new ArrayList<Tag>();
+		this.counterBiometriasCadastradas = this.meterRegister.counter("biometrias_cadastradas", tags);
 	}
 
 	@GetMapping("/{id}")
@@ -56,6 +72,7 @@ public class BiometriaController {
 				.orElseThrow(() -> new CartaoNaoEncontradoException(idDoCartao));
 		Biometria biometria = biometriaRequest.toModel(cartao);
 		this.biometriaRepository.save(biometria);
+		this.counterBiometriasCadastradas.increment();
 		LOG.info("biometria salva para o cartão {}", idDoCartao);
 		URI uri = uriBuilder.path("/biometrias/{id}").buildAndExpand(biometria.getId()).toUri();
 		LOG.info("retornando a URL da nova biometria");

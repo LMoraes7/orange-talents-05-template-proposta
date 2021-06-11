@@ -21,7 +21,7 @@ import br.com.zup.proposta.dominio.modelo.cartao.bloqueio.Bloqueio;
 import br.com.zup.proposta.dominio.repository.CartaoRepository;
 
 @RestController
-@RequestMapping("/cartoes")
+@RequestMapping("/api/cartoes")
 public class CartaoController {
 
 	private EntityManager manager;

@@ -1,7 +1,10 @@
 package br.com.zup.proposta.api.controller.proposta;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -23,18 +26,37 @@ import br.com.zup.proposta.api.controller.proposta.dto.response.PropostaResponse
 import br.com.zup.proposta.dominio.exception.proposta.PropostaNaoEncontradaException;
 import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
 import br.com.zup.proposta.dominio.repository.PropostaRepository;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tag;
 
 @RestController
-@RequestMapping("/propostas")
+@RequestMapping("/api/propostas")
 public class PropostaController {
 
 	private PropostaRepository propostaRepository;
 	private ApplicationEventPublisher eventPublisher;
+	private final MeterRegistry meterRegistry;
 	private final Logger LOG = LoggerFactory.getLogger(PropostaController.class);
+	private Counter counterPropostasCriadas;
 
-	public PropostaController(PropostaRepository propostaRepository, ApplicationEventPublisher eventPublisher) {
+	public PropostaController(PropostaRepository propostaRepository, ApplicationEventPublisher eventPublisher,
+			MeterRegistry meterRegistry) {
 		this.propostaRepository = propostaRepository;
 		this.eventPublisher = eventPublisher;
+		this.meterRegistry = meterRegistry;
+	}
+
+	@PostConstruct
+	public void initMetricas() {
+		Collection<Tag> tags = new ArrayList<Tag>();
+//		tags.add(Tag.of("emissora", "Mastercard"));
+//	    tags.add(Tag.of("banco", "Itaú"));
+//		No exemplo acima eu estou definindo a criação das LABEL's
+//		this.counterPropostasCriadasParaOBancoItauComABandeiraMasterCard = this.meterRegistry.counter("propostas_criadas", tags);
+		this.counterPropostasCriadas = this.meterRegistry.counter("propostas_criadas", tags);
+//		Devemos passar o nome da métrica(NAME) e as LABEL's que serão as tags
+//		propostas_criadas é o nome da MÉTRICA
 	}
 
 	@GetMapping("/{id}")
@@ -53,6 +75,7 @@ public class PropostaController {
 		LOG.info("recebendo requisição de uma nova proposta");
 		Proposta proposta = propostaRequest.toModel();
 		this.propostaRepository.save(proposta);
+		this.counterPropostasCriadas.increment();
 		LOG.info("salvando a nova proposta");
 		this.eventPublisher.publishEvent(new SolicitacaoAnaliseRequestDto(proposta));
 		LOG.info("proposta liberada para análise");
