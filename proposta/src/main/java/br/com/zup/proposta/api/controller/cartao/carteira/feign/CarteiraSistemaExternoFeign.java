@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import br.com.zup.proposta.api.controller.cartao.carteira.dto.request.SolicitacaoInclusaoCarteiraRequestDto;
 import br.com.zup.proposta.api.controller.cartao.carteira.dto.response.ResultadoCarteiraResponseDto;
 
-@FeignClient(url = "http://localhost:8888", name = "carteira")
+@FeignClient(url = "${cartao.uri}", name = "carteira")
 public interface CarteiraSistemaExternoFeign {
 
 	@RequestMapping(value="/api/cartoes/{id}/carteiras", method= RequestMethod.POST, consumes = "application/json")

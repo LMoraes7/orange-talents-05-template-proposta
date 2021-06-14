@@ -8,7 +8,7 @@ import br.com.zup.proposta.api.controller.proposta.dto.request.SolicitacaoAnalis
 import br.com.zup.proposta.api.controller.proposta.dto.response.ResultadoCartaoResponseDto;
 import br.com.zup.proposta.api.controller.proposta.feign.fallback.AtrelarCartaoAsPropostasAprovadasFallback;
 
-@FeignClient(name = "apiAtrelarCartaoAsPropostasAprovadas", url = "http://localhost:8888", fallback = AtrelarCartaoAsPropostasAprovadasFallback.class)
+@FeignClient(name = "apiAtrelarCartaoAsPropostasAprovadas", url = "${cartao.uri}", fallback = AtrelarCartaoAsPropostasAprovadasFallback.class)
 public interface AtrelarCartaoAsPropostasAprovadasFeign {
 
 	@PostMapping("/api/cartoes")

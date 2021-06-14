@@ -8,7 +8,7 @@ import br.com.zup.proposta.api.controller.proposta.dto.request.SolicitacaoAnalis
 import br.com.zup.proposta.api.controller.proposta.dto.response.ResultadoAnaliseResponseDto;
 import br.com.zup.proposta.api.controller.proposta.feign.fallback.ConsultarStatusPropostaFallback;
 
-@FeignClient(name = "apiConsultaStatusProposta", url = "http://localhost:9999", fallback = ConsultarStatusPropostaFallback.class)
+@FeignClient(name = "apiConsultaStatusProposta", url = "${consulta-proposta.uri}", fallback = ConsultarStatusPropostaFallback.class)
 public interface ConsultarStatusPropostaFeign {
 
 	@PostMapping("/api/solicitacao")

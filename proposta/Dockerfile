@@ -1,4 +1,4 @@
 FROM openjdk:11-jre-slim
-WORKDIR /app
 COPY target/*.jar /app/proposta.jar
-ENTRYPOINT ["java","-jar", "proposta.jar"]
+EXPOSE 8080
+ENTRYPOINT ["java","-jar", "/app/proposta.jar"]
