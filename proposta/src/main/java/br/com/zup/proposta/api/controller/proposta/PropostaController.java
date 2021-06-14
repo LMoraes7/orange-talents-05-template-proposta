@@ -29,6 +29,8 @@ import br.com.zup.proposta.dominio.repository.PropostaRepository;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 
 @RestController
 @RequestMapping("/api/propostas")
@@ -36,15 +38,17 @@ public class PropostaController {
 
 	private PropostaRepository propostaRepository;
 	private ApplicationEventPublisher eventPublisher;
+	private Counter counterPropostasCriadas;
 	private final MeterRegistry meterRegistry;
 	private final Logger LOG = LoggerFactory.getLogger(PropostaController.class);
-	private Counter counterPropostasCriadas;
+	private final Tracer tracer;
 
 	public PropostaController(PropostaRepository propostaRepository, ApplicationEventPublisher eventPublisher,
-			MeterRegistry meterRegistry) {
+			MeterRegistry meterRegistry, Tracer tracer) {
 		this.propostaRepository = propostaRepository;
 		this.eventPublisher = eventPublisher;
 		this.meterRegistry = meterRegistry;
+		this.tracer = tracer;
 	}
 
 	@PostConstruct
@@ -72,6 +76,10 @@ public class PropostaController {
 	@PostMapping
 	public ResponseEntity<Object> cadastrarProposta(@RequestBody @Valid PropostaRequestDto propostaRequest,
 			UriComponentsBuilder uriBuilder) {
+		Span activeSpan = tracer.activeSpan();
+		activeSpan.setTag("user.email", propostaRequest.getEmail());
+		activeSpan.setBaggageItem("user.email", propostaRequest.getEmail());
+		activeSpan.log("Criação de proposta para o e-mail " + propostaRequest.getEmail());
 		LOG.info("recebendo requisição de uma nova proposta");
 		Proposta proposta = propostaRequest.toModel();
 		this.propostaRepository.save(proposta);

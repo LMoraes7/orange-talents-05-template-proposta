@@ -43,10 +43,10 @@ public class CarteiraController {
 			UriComponentsBuilder uriBuilder) {
 		Gateway gateway = Gateway.PAYPAL;
 		Cartao cartao = this.verificarSeCartaoExisteESeJaPossuiGatewayInformado(idDoCartao, gateway);
-		var resultadoCarteiraResponseDto = this.consultaSistemasDeCartaoEVerificarSeFoiPossivelAdicionarGateway(gateway,
-				cartao);
-		Carteira carteira = instanciaESalvaCarteira(gateway, cartao, resultadoCarteiraResponseDto);
-		return gerarAURLDoRecursoERetornarRespostaAoCliente(uriBuilder, carteira);
+		var resultadoCarteiraResponseDto = this
+				.consultarSistemasDeCartaoEVerificarSeFoiPossivelAdicionarGateway(gateway, cartao);
+		Carteira carteira = this.instanciarESalvaCarteira(gateway, cartao, resultadoCarteiraResponseDto);
+		return this.gerarAURLDoRecursoERetornarRespostaAoCliente(uriBuilder, carteira);
 	}
 
 	@PostMapping("/{idDoCartao}/samsung-pay")
@@ -55,10 +55,10 @@ public class CarteiraController {
 			UriComponentsBuilder uriBuilder) {
 		Gateway gateway = Gateway.SAMSUNG_PAY;
 		Cartao cartao = this.verificarSeCartaoExisteESeJaPossuiGatewayInformado(idDoCartao, gateway);
-		var resultadoCarteiraResponseDto = this.consultaSistemasDeCartaoEVerificarSeFoiPossivelAdicionarGateway(gateway,
-				cartao);
-		Carteira carteira = this.instanciaESalvaCarteira(gateway, cartao, resultadoCarteiraResponseDto);
-		return gerarAURLDoRecursoERetornarRespostaAoCliente(uriBuilder, carteira);
+		var resultadoCarteiraResponseDto = this
+				.consultarSistemasDeCartaoEVerificarSeFoiPossivelAdicionarGateway(gateway, cartao);
+		Carteira carteira = this.instanciarESalvaCarteira(gateway, cartao, resultadoCarteiraResponseDto);
+		return this.gerarAURLDoRecursoERetornarRespostaAoCliente(uriBuilder, carteira);
 	}
 
 	private Cartao verificarSeCartaoExisteESeJaPossuiGatewayInformado(Long idDoCartao, Gateway gateway) {
@@ -70,7 +70,7 @@ public class CarteiraController {
 		return cartao;
 	}
 
-	private ResultadoCarteiraResponseDto consultaSistemasDeCartaoEVerificarSeFoiPossivelAdicionarGateway(
+	private ResultadoCarteiraResponseDto consultarSistemasDeCartaoEVerificarSeFoiPossivelAdicionarGateway(
 			Gateway gateway, Cartao cartao) {
 		var resultadoCarteiraResponseDto = this.clientFeign.consultar(cartao.getNumeroDoCartao(),
 				new SolicitacaoInclusaoCarteiraRequestDto(cartao.getProposta().getEmail(), gateway.toString()));
@@ -81,7 +81,7 @@ public class CarteiraController {
 	}
 
 	@Transactional
-	private Carteira instanciaESalvaCarteira(Gateway gateway, Cartao cartao,
+	private Carteira instanciarESalvaCarteira(Gateway gateway, Cartao cartao,
 			ResultadoCarteiraResponseDto resultadoCarteiraResponseDto) {
 		Carteira carteira = new Carteira(resultadoCarteiraResponseDto.getId(), cartao, gateway);
 		carteira = this.manager.merge(carteira);
