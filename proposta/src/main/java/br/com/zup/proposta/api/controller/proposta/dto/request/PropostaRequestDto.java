@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import br.com.zup.proposta.dominio.modelo.proposta.DocumentoLimpo;
 import br.com.zup.proposta.dominio.modelo.proposta.Endereco;
 import br.com.zup.proposta.dominio.modelo.proposta.Proposta;
 import br.com.zup.proposta.infraestrutura.validacao.anotacao.CPForCNPJ;
@@ -81,8 +82,8 @@ public class PropostaRequestDto {
 				+ endereco + ", salario=" + salario + "]";
 	}
 
-	public Proposta toModel() {
-		return new Proposta(this.documento, this.email,
+	public Proposta toModel(String chaveSecreta, String salt) {
+		return new Proposta(new DocumentoLimpo(this.documento, chaveSecreta, salt), this.email,
 				new Endereco(this.endereco.getLogradouro(), this.endereco.getNumero(), this.endereco.getComplemento()),
 				this.nome, this.salario);
 	}

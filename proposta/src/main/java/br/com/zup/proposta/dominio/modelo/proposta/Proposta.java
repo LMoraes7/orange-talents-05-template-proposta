@@ -48,8 +48,8 @@ public class Proposta {
 	public Proposta() {
 	}
 
-	public Proposta(String documento, String email, Endereco endereco, String nome, BigDecimal salario) {
-		this.documento = documento;
+	public Proposta(DocumentoLimpo documento, String email, Endereco endereco, String nome, BigDecimal salario) {
+		this.documento = documento.getDocumento();
 		this.email = email;
 		this.endereco = endereco;
 		this.nome = nome;
@@ -68,7 +68,7 @@ public class Proposta {
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}

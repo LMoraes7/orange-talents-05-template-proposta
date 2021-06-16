@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,10 @@ import io.opentracing.Tracer;
 @RequestMapping("/api/propostas")
 public class PropostaController {
 
+	@Value("${criptografia.chave-secreta}")
+	private String chaveSecreta;
+	@Value("${criptografia.salt}")
+	private String salt;
 	private PropostaRepository propostaRepository;
 	private ApplicationEventPublisher eventPublisher;
 	private Counter counterPropostasCriadas;
@@ -81,7 +86,7 @@ public class PropostaController {
 		activeSpan.setBaggageItem("user.email", propostaRequest.getEmail());
 		activeSpan.log("Criação de proposta para o e-mail " + propostaRequest.getEmail());
 		LOG.info("recebendo requisição de uma nova proposta");
-		Proposta proposta = propostaRequest.toModel();
+		Proposta proposta = propostaRequest.toModel(this.chaveSecreta, this.salt);
 		this.propostaRepository.save(proposta);
 		this.counterPropostasCriadas.increment();
 		LOG.info("salvando a nova proposta");
